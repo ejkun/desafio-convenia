@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Fornecedores
+Route::get('fornecedores/{id?}', 'FornecedorController@get');
+Route::post('fornecedores', 'FornecedorController@post');
