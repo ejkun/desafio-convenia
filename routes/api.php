@@ -17,8 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Fornecedores
-Route::get('fornecedores/{id?}', 'FornecedorController@get');
-Route::post('fornecedores', 'FornecedorController@post');
-Route::delete('fornecedores/{id}', 'FornecedorController@delete');
-Route::patch('fornecedores/{id}', 'FornecedorController@patch');
+Route::group(['as' => 'api.'], function () {
+    Route::get('fornecedores/{id?}', 'API\FornecedorController@get')->name('get.fornecedores');
+    Route::post('fornecedores', 'API\FornecedorController@post')->name('post.fornecedores');
+    Route::delete('fornecedores/{id}', 'API\FornecedorController@delete')->name('delete.fornecedores');
+    Route::patch('fornecedores/{id}', 'API\FornecedorController@patch')->name('patch.fornecedores');
+    Route::put('fornecedores/{id}', 'API\FornecedorController@patch')->name('put.fornecedores');
+});

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 abstract class AbstractApiController extends Controller
@@ -9,8 +11,9 @@ abstract class AbstractApiController extends Controller
     protected $className;
     protected $props = [];
     protected $errorMessages = [];
+    protected $bodyValidate = [];
 
-    private function getModelOrAbort($id) {
+    private function getModelOrAbort($id): Model {
         $model = $this->className::find($id);
 
         if ($model === null) {
@@ -36,6 +39,8 @@ abstract class AbstractApiController extends Controller
     {
         $model = new $this->className();
 
+        $request->validate($this->bodyValidate);
+
         foreach ($this->props as $prop) {
             $model->$prop = $request->input($prop);
         }
@@ -50,6 +55,22 @@ abstract class AbstractApiController extends Controller
         $model = $this->getModelOrAbort($id);
 
         $model->delete();
+
+        return $model;
+    }
+
+    public function put($id, Request $request)
+    {
+        $model = $this->getModelOrAbort($id);
+
+        $request->validate($this->bodyValidate);
+
+        foreach ($this->props as $p) {
+            $pV = $request->input($p);
+            $model->$p = $pV;
+        }
+
+        $model->save();
 
         return $model;
     }
