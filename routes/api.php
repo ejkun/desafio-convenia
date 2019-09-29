@@ -20,3 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Fornecedores
 Route::get('fornecedores/{id?}', 'FornecedorController@get');
 Route::post('fornecedores', 'FornecedorController@post');
+Route::delete('fornecedores/{id}', 'FornecedorController@delete');
+Route::patch('fornecedores/{id}', 'FornecedorController@patch');
