@@ -82,6 +82,11 @@ abstract class AbstractApiController extends Controller
         foreach ($this->props as $p) {
             if ($request->has($p)) {
                 $pV = $request->input($p);
+                $this
+                    ->getValidationFactory()
+                    ->make([$p => $pV],[$p => $this->bodyValidate[$p]])
+                    ->validate()
+                ;
                 $model->$p = $pV;
             }
         }
