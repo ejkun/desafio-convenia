@@ -13,4 +13,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fornecedor extends Model
 {
     protected $table = 'fornecedores';
+
+    public function ativacao()
+    {
+        return $this->hasOne(AtivacaoFornecedor::class);
+    }
 }
