@@ -15,7 +15,7 @@ class CreateAtivacaoFornecedorsTable extends Migration
     {
         Schema::create('ativacao_fornecedores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('token',64);
+            $table->char('token',32);
             $table->boolean('ativo')->default(false);
             $table->timestamps();
         });
