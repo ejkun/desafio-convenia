@@ -14,12 +14,12 @@ class AddRelationVerificacaoFornecedor extends Migration
      */
     public function up()
     {
-        Schema::table('fornecedor', function (Blueprint $table) {
-            $table->integer('ativacao_fornecedor_id')->unsigned();
+        Schema::table('fornecedores', function (Blueprint $table) {
+            $table->unsignedBigInteger('ativacao_fornecedor_id');
 
             $table->foreign('ativacao_fornecedor_id')
                 ->references('id')
-                ->on(AtivacaoFornecedor::class)
+                ->on('ativacao_fornecedores')
                 ->onDelete('cascade')
             ;
         });
