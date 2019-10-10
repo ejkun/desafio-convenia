@@ -1,0 +1,4 @@
+#!/bin/bash
+
+str="$*"
+docker-compose exec -u 82 php php /var/www/artisan $str

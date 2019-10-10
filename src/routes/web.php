@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['as' => 'web.'], function () {
+    Route::get('fornecedores/ativar/{token}', 'FornecedorController@ativar')->name('ativar.fornecedores');
 });

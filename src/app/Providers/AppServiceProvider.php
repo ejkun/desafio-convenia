@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\AtivacaoFornecedor;
+use App\Fornecedor;
+use App\Observers\AtivacaoFornecedorObserver;
+use App\Observers\FornecedorObserver;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Eloquent Observer
+        Fornecedor::observe(FornecedorObserver::class);
+        AtivacaoFornecedor::observe(AtivacaoFornecedorObserver::class);
     }
 }
