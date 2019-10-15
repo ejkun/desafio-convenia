@@ -42,7 +42,9 @@ abstract class AbstractApiController extends Controller
         $request->validate($this->bodyValidate);
 
         foreach ($this->props as $prop) {
-            $model->$prop = $request->input($prop);
+            if ($request->has($prop)) {
+                $model->$prop = $request->input($prop);
+            }
         }
 
         $model->save();
@@ -66,8 +68,10 @@ abstract class AbstractApiController extends Controller
         $request->validate($this->bodyValidate);
 
         foreach ($this->props as $p) {
-            $pV = $request->input($p);
-            $model->$p = $pV;
+            if ($request->has($p)) {
+                $pV = $request->input($p);
+                $model->$p = $pV;
+            }
         }
 
         $model->save();
