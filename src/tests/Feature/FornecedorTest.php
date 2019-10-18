@@ -9,6 +9,8 @@ use Tests\TestCase;
 
 class FornecedorTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -16,94 +18,130 @@ class FornecedorTest extends TestCase
      */
     public function testFornecedor()
     {
-        //POST 1
-        $response = $this->postJson('/api/fornecedores',[
-            'nome' => 'Convenia',
-            'email' => 'contato@convenia.com.br',
-            'mensalidade' => 980
-        ]);
-        $response->assertJson([
-            'nome' => 'Convenia',
-            'email' => 'contato@convenia.com.br',
-            'mensalidade' => 980
-        ]);
-        $fornecedor1 = $response->json();
-
-        //GET 1
-        $response = $this->getJson('/api/fornecedores/'.$fornecedor1['id']);
-        $response->assertJson($fornecedor1);
+        $fornecedor1 = $this->inserirFornecedor1();
+        $this->verificarFornecedor($fornecedor1);
 
         //POST 2
-        $response = $this->postJson('/api/fornecedores',[
-            'nome' => 'Room21',
-            'email' => 'contato@room21.dev',
-            'mensalidade' => 835
-        ]);
-        $response->assertJson([
-            'nome' => 'Room21',
-            'email' => 'contato@room21.dev',
-            'mensalidade' => 835
-        ]);
-
-        $fornecedor2 = $response->json();
-
-        //GET 2
-        $response = $this->getJson('/api/fornecedores/'.$fornecedor2['id']);
-        $response->assertJson($fornecedor2);
+        $fornecedor2 = $this->inserirFornecedor2();
+        $this->verificarFornecedor($fornecedor2);
 
         //GET ALL
 
         //PUT
-        $response = $this->putJson('/api/fornecedores/'.$fornecedor1['id'],[
-            'nome' => 'Convenia',
-            'email' => 'contato@convenia.com.br',
-            'mensalidade' => 1000
-        ]);
-        $response->assertJson([
-            'nome' => 'Convenia',
-            'email' => 'contato@convenia.com.br',
-            'mensalidade' => 1000
-        ]);
+        $this->putFornecedor1($fornecedor1);
 
         //PATCH
-        $response = $this->patchJson('/api/fornecedores/'.$fornecedor2['id'],[
-            'mensalidade' => 900
+        $this->patchFornecedor2($fornecedor2);
+
+        //ATIVAR
+        $this->ativarFornecedor($fornecedor1);
+
+        //MEDIA
+        $this->checkTotal([
+            'total_mensalidades' => 1000,
+            'qtd_fornecedores' => 1
+        ]);
+
+        //ATIVAR
+        $this->ativarFornecedor($fornecedor2);
+
+        //MEDIA
+        $this->checkTotal([
+            'total_mensalidades' => 1900,
+            'qtd_fornecedores' => 2
+        ]);
+
+        //DELETE
+        $this->deleteFornecedor($fornecedor1);
+        $this->deleteFornecedor($fornecedor2);
+    }
+
+    private function inserirFornecedor1()
+    {
+        $response = $this->postJson('/api/fornecedores',[
+            'nome' => 'Convenia',
+            'email' => 'contato@convenia.com.br',
+            'mensalidade' => 980
+        ]);
+        $response->assertJson([
+            'nome' => 'Convenia',
+            'email' => 'contato@convenia.com.br',
+            'mensalidade' => 980
+        ]);
+
+        return $response->json();
+    }
+
+    private function inserirFornecedor2()
+    {
+        $response = $this->postJson('/api/fornecedores',[
+            'nome' => 'Room21',
+            'email' => 'contato@room21.dev',
+            'mensalidade' => 835
         ]);
         $response->assertJson([
             'nome' => 'Room21',
             'email' => 'contato@room21.dev',
-            'mensalidade' => 900
+            'mensalidade' => 835
         ]);
 
-        //ATIVAR
-        /** @var Fornecedor $f1Obj */
-        $f1Obj = Fornecedor::find($fornecedor1['id']);
-        $response = $this->get('/fornecedores/ativar/'.$f1Obj->ativacao->token);
-        $response->assertStatus(200);
+        return $response->json();
+    }
 
-        //TODO: MEDIA
+    private function verificarFornecedor($fornecedor)
+    {
+        $response = $this->getJson('/api/fornecedores/'.$fornecedor['id']);
+        $response->assertJson($fornecedor);
+    }
 
-        //ATIVAR
-        /** @var Fornecedor $f2Obj */
-        $f2Obj = Fornecedor::find($fornecedor2['id']);
-        $response = $this->get('/fornecedores/ativar/'.$f2Obj->ativacao->token);
-        $response->assertStatus(200);
-
-        //TODO: MEDIA
-
-        //DELETE
-        $response = $this->deleteJson('/api/fornecedores/'.$fornecedor1['id']);
+    private function putFornecedor1($fornecedor)
+    {
+        $response = $this->putJson('/api/fornecedores/'.$fornecedor['id'],[
+            'nome' => 'Convenia',
+            'email' => 'contato@convenia.com.br',
+            'mensalidade' => 1000
+        ]);
         $response->assertJson([
             'nome' => 'Convenia',
             'email' => 'contato@convenia.com.br',
             'mensalidade' => 1000
         ]);
+    }
 
-        $response = $this->deleteJson('/api/fornecedores/'.$fornecedor2['id']);
+    private function patchFornecedor2($fornecedor)
+    {
+        $response = $this->patchJson('/api/fornecedores/'.$fornecedor['id'],[
+            'mensalidade' => 900
+        ]);
         $response->assertJson([
             'nome' => 'Room21',
             'email' => 'contato@room21.dev',
             'mensalidade' => 900
+        ]);
+    }
+
+    private function ativarFornecedor($fornecedor)
+    {
+        /** @var Fornecedor $obj */
+        $obj = Fornecedor::find($fornecedor['id']);
+        $response = $this->get('/fornecedores/ativar/'.$obj->ativacao->token);
+        $response->assertStatus(200);
+    }
+
+    private function checkTotal($arr)
+    {
+        $response = $this->get('/api/fornecedores/total');
+        $response->assertJson($arr);
+    }
+
+    private function deleteFornecedor($fornecedor)
+    {
+        $obj = Fornecedor::find($fornecedor['id']);
+        $response = $this->deleteJson('/api/fornecedores/'.$fornecedor['id']);
+        $response->assertJson([
+            'nome' => $obj->nome,
+            'email' => $obj->email,
+            'mensalidade' => $obj->mensalidade
         ]);
     }
 }
