@@ -41,8 +41,14 @@ class AddRelationVerificacaoFornecedor extends Migration
      */
     public function down()
     {
-        Schema::table('fornecedor', function (Blueprint $table) {
-            //
+        Schema::table('fornecedores', function (Blueprint $table) {
+            $table->dropForeign(['ativacao_fornecedor_id']);
+            $table->dropColumn('ativacao_fornecedor_id');
+        });
+
+        Schema::table('ativacao_fornecedores', function (Blueprint $table) {
+            $table->dropForeign(['fornecedor_id']);
+            $table->dropColumn('fornecedor_id');
         });
     }
 }

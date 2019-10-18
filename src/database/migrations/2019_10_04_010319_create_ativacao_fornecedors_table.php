@@ -28,6 +28,6 @@ class CreateAtivacaoFornecedorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ativacao_fornecedors');
+        Schema::dropIfExists('ativacao_fornecedores');
     }
 }

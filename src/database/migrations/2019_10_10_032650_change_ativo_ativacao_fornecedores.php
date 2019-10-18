@@ -26,7 +26,7 @@ class ChangeAtivoAtivacaoFornecedores extends Migration
     public function down()
     {
         Schema::table('ativacao_fornecedores', function (Blueprint $table) {
-            //
+            $table->boolean('ativo')->default(false)->change();
         });
     }
 }
