@@ -22,8 +22,8 @@ class FornecedorController extends AbstractApiController
     {
         $total = Fornecedor::query()
             ->selectRaw('IFNULL(SUM(mensalidade),0) as total_mensalidades, COUNT(id) as qtd_fornecedores')
-            ->where('ativo','=',0)
-            ->get();
+            ->where('ativo','=',1)
+            ->first();
 
         return $total;
     }
