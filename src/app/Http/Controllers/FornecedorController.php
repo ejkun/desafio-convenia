@@ -6,6 +6,7 @@ use App\AtivacaoFornecedor;
 use App\Fornecedor;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,6 +33,8 @@ class FornecedorController extends Controller
             $ativacao->save();
             $fornecedor->save();
         });
+
+        Cache::forget(\App\Http\Controllers\API\FornecedorController::CACHE_BASE_NAME . '_total');
 
         return view('fornecedor/ativar',[
             'fornecedor' => $fornecedor
