@@ -19,4 +19,9 @@ class FornecedorObserver
         $ativacao->token = md5($fornecedor->email);
         $fornecedor->ativacao()->save($ativacao);
     }
+
+    public function deleting(Fornecedor $fornecedor)
+    {
+        $fornecedor->ativacao()->delete();
+    }
 }
