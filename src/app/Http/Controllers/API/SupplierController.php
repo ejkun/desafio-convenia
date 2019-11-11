@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Fornecedor;
+use App\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class FornecedorController extends AbstractApiController
+class SupplierController extends AbstractApiController
 {
-    const CACHE_BASE_NAME = 'fornecedor';
-    protected $className = Fornecedor::class;
+    const CACHE_BASE_NAME = 'supplier';
+    protected $className = Supplier::class;
     protected $props = ['nome','email','mensalidade','ativo'];
     protected $errorMessages = [
-        404 => 'Fornecedor não encontrado'
+        404 => 'Supplier não encontrado'
     ];
     protected $bodyValidate = [
         'nome' => 'required|max:255',
@@ -23,7 +23,7 @@ class FornecedorController extends AbstractApiController
     public function total(Request $request)
     {
         $total = Cache::remember(self::CACHE_BASE_NAME.'_total', $this->cacheTime, function () {
-            return Fornecedor::query()
+            return Supplier::query()
                 ->selectRaw('IFNULL(SUM(mensalidade),0) as total_mensalidades, COUNT(id) as qtd_fornecedores')
                 ->where('ativo','=',1)
                 ->first();

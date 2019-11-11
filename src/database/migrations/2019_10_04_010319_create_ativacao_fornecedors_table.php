@@ -13,7 +13,7 @@ class CreateAtivacaoFornecedorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ativacao_fornecedores', function (Blueprint $table) {
+        Schema::create('suppliers_activations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('token',32);
             $table->boolean('ativo')->default(false);
@@ -28,6 +28,6 @@ class CreateAtivacaoFornecedorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ativacao_fornecedores');
+        Schema::dropIfExists('suppliers_activations');
     }
 }

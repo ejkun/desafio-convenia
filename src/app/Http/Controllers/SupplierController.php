@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\AtivacaoFornecedor;
-use App\Fornecedor;
+use App\SupplierActivation;
+use App\Supplier;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FornecedorController extends Controller
+class SupplierController extends Controller
 {
-    public function ativar($token, Request $request)
+    public function activate($token, Request $request)
     {
         /** @var Collection $result */
-        $result = AtivacaoFornecedor::where(['token' => $token, 'ativo' => 1])->get();
+        $result = SupplierActivation::where(['token' => $token, 'ativo' => 1])->get();
 
         if ($result->count() != 1) {
             throw new NotFoundHttpException("Token inválido");
         }
 
-        /** @var AtivacaoFornecedor $ativacao */
+        /** @var SupplierActivation $ativacao */
         $ativacao = $result->first();
-        /** @var Fornecedor $fornecedor */
-        $fornecedor = $ativacao->fornecedor;
+        /** @var Supplier $fornecedor */
+        $fornecedor = $ativacao->supplier;
 
         DB::transaction(function () use ($ativacao, $fornecedor) {
             $ativacao->ativo = 0;
@@ -34,10 +34,10 @@ class FornecedorController extends Controller
             $fornecedor->save();
         });
 
-        Cache::forget(\App\Http\Controllers\API\FornecedorController::CACHE_BASE_NAME . '_total');
+        Cache::forget(\App\Http\Controllers\API\SupplierController::CACHE_BASE_NAME . '_total');
 
-        return view('fornecedor/ativar',[
-            'fornecedor' => $fornecedor
+        return view('supplier/activate',[
+            'supplier' => $fornecedor
         ]);
     }
 }

@@ -15,7 +15,7 @@ class FornecedoresTableSeeder extends Seeder
     {
         $numFornecedores = 3;
         while ($numFornecedores) {
-            DB::table('fornecedores')->insert([
+            DB::table('suppliers')->insert([
                 'nome' => Str::random(10),
                 'email' => Str::random(10).'@gmail.com',
                 'mensalidade' => rand(100,1000),

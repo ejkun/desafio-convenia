@@ -2,17 +2,17 @@
 
 namespace App\Mail;
 
-use App\AtivacaoFornecedor;
+use App\SupplierActivation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EmailAtivacaoFornecedor extends Mailable
+class SupplierActivationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /** @var AtivacaoFornecedor */
+    /** @var SupplierActivation */
     private $ativacaoFornecedor;
 
     /**
@@ -20,7 +20,7 @@ class EmailAtivacaoFornecedor extends Mailable
      *
      * @return void
      */
-    public function __construct(AtivacaoFornecedor $ativacaoFornecedor)
+    public function __construct(SupplierActivation $ativacaoFornecedor)
     {
         $this->ativacaoFornecedor = $ativacaoFornecedor;
     }
@@ -32,15 +32,15 @@ class EmailAtivacaoFornecedor extends Mailable
      */
     public function build()
     {
-        $fornecedor = $this->ativacaoFornecedor->fornecedor()->first();
+        $fornecedor = $this->ativacaoFornecedor->supplier()->first();
 
         $aux = [
             'nome' => $fornecedor->nome,
             'valor' => $fornecedor->mensalidade,
-            'url' => route('web.ativar.fornecedores',['token' => $this->ativacaoFornecedor->token]),
+            'url' => route('web.activate.suppliers',['token' => $this->ativacaoFornecedor->token]),
             'token' => $this->ativacaoFornecedor->token
         ];
 
-        return $this->view('emails.ativacao_fornecedor',$aux);
+        return $this->view('emails.supplier_activation',$aux);
     }
 }

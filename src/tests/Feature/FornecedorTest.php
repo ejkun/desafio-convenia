@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Fornecedor;
+use App\Supplier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -58,7 +58,7 @@ class FornecedorTest extends TestCase
 
     private function inserirFornecedor1()
     {
-        $response = $this->postJson('/api/fornecedores',[
+        $response = $this->postJson('/api/suppliers',[
             'nome' => 'Convenia',
             'email' => 'contato@convenia.com.br',
             'mensalidade' => 980
@@ -74,7 +74,7 @@ class FornecedorTest extends TestCase
 
     private function inserirFornecedor2()
     {
-        $response = $this->postJson('/api/fornecedores',[
+        $response = $this->postJson('/api/suppliers',[
             'nome' => 'Room21',
             'email' => 'contato@room21.dev',
             'mensalidade' => 835
@@ -90,13 +90,13 @@ class FornecedorTest extends TestCase
 
     private function verificarFornecedor($fornecedor)
     {
-        $response = $this->getJson('/api/fornecedores/'.$fornecedor['id']);
+        $response = $this->getJson('/api/suppliers/'.$fornecedor['id']);
         $response->assertJson($fornecedor);
     }
 
     private function putFornecedor1($fornecedor)
     {
-        $response = $this->putJson('/api/fornecedores/'.$fornecedor['id'],[
+        $response = $this->putJson('/api/suppliers/'.$fornecedor['id'],[
             'nome' => 'Convenia',
             'email' => 'contato@convenia.com.br',
             'mensalidade' => 1000
@@ -110,7 +110,7 @@ class FornecedorTest extends TestCase
 
     private function patchFornecedor2($fornecedor)
     {
-        $response = $this->patchJson('/api/fornecedores/'.$fornecedor['id'],[
+        $response = $this->patchJson('/api/suppliers/'.$fornecedor['id'],[
             'mensalidade' => 900
         ]);
         $response->assertJson([
@@ -122,22 +122,22 @@ class FornecedorTest extends TestCase
 
     private function ativarFornecedor($fornecedor)
     {
-        /** @var Fornecedor $obj */
-        $obj = Fornecedor::find($fornecedor['id']);
-        $response = $this->get('/fornecedores/ativar/'.$obj->ativacao->token);
+        /** @var Supplier $obj */
+        $obj = Supplier::find($fornecedor['id']);
+        $response = $this->get('/suppliers/activate/'.$obj->activation->token);
         $response->assertStatus(200);
     }
 
     private function checkTotal($arr)
     {
-        $response = $this->get('/api/fornecedores/total');
+        $response = $this->get('/api/suppliers/total');
         $response->assertJson($arr);
     }
 
     private function deleteFornecedor($fornecedor)
     {
-        $obj = Fornecedor::find($fornecedor['id']);
-        $response = $this->deleteJson('/api/fornecedores/'.$fornecedor['id']);
+        $obj = Supplier::find($fornecedor['id']);
+        $response = $this->deleteJson('/api/suppliers/'.$fornecedor['id']);
         $response->assertJson([
             'nome' => $obj->nome,
             'email' => $obj->email,

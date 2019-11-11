@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\AtivacaoFornecedor;
-use App\Mail\EmailAtivacaoFornecedor;
+use App\SupplierActivation;
+use App\Mail\SupplierActivationEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class AtivarFornecedor implements ShouldQueue
+class ActivateSupplier implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +22,7 @@ class AtivarFornecedor implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(AtivacaoFornecedor $ativacaoFornecedor)
+    public function __construct(SupplierActivation $ativacaoFornecedor)
     {
         $this->ativacaoFornecedor = $ativacaoFornecedor;
     }
@@ -34,8 +34,8 @@ class AtivarFornecedor implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->ativacaoFornecedor->fornecedor()->get('email'))
-            ->send(new EmailAtivacaoFornecedor($this->ativacaoFornecedor))
+        Mail::to($this->ativacaoFornecedor->supplier()->get('email'))
+            ->send(new SupplierActivationEmail($this->ativacaoFornecedor))
         ;
     }
 }

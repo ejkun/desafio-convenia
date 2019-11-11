@@ -13,7 +13,7 @@ class AddAtivoFornecedor extends Migration
      */
     public function up()
     {
-        Schema::table('fornecedores', function (Blueprint $table) {
+        Schema::table('suppliers', function (Blueprint $table) {
             $table->boolean('ativo')->default(false);
         });
     }
@@ -25,7 +25,7 @@ class AddAtivoFornecedor extends Migration
      */
     public function down()
     {
-        Schema::table('fornecedores', function (Blueprint $table) {
+        Schema::table('suppliers', function (Blueprint $table) {
             $table->removeColumn('ativo');
         });
     }

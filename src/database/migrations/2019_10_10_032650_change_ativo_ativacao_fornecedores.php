@@ -13,7 +13,7 @@ class ChangeAtivoAtivacaoFornecedores extends Migration
      */
     public function up()
     {
-        Schema::table('ativacao_fornecedores', function (Blueprint $table) {
+        Schema::table('suppliers_activations', function (Blueprint $table) {
             $table->boolean('ativo')->default(true)->change();
         });
     }
@@ -25,7 +25,7 @@ class ChangeAtivoAtivacaoFornecedores extends Migration
      */
     public function down()
     {
-        Schema::table('ativacao_fornecedores', function (Blueprint $table) {
+        Schema::table('suppliers_activations', function (Blueprint $table) {
             $table->boolean('ativo')->default(false)->change();
         });
     }

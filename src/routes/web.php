@@ -12,5 +12,5 @@
 */
 
 Route::group(['as' => 'web.'], function () {
-    Route::get('fornecedores/ativar/{token}', 'FornecedorController@ativar')->name('ativar.fornecedores');
+    Route::get('suppliers/activate/{token}', 'SupplierController@activate')->name('activate.suppliers');
 });

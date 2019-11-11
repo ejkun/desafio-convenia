@@ -18,10 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['as' => 'api.'], function () {
-    Route::get('fornecedores/{id?}', 'API\FornecedorController@get')->name('fornecedores.get')->where('id', '\d+');
-    Route::post('fornecedores', 'API\FornecedorController@post')->name('fornecedores.post');
-    Route::delete('fornecedores/{id}', 'API\FornecedorController@delete')->name('fornecedores.delete')->where('id', '\d+');
-    Route::patch('fornecedores/{id}', 'API\FornecedorController@patch')->name('fornecedores.patch')->where('id', '\d+');
-    Route::put('fornecedores/{id}', 'API\FornecedorController@patch')->name('fornecedores.put')->where('id', '\d+');
-    Route::get('fornecedores/total', 'API\FornecedorController@total')->name('fornecedores.total');
+    Route::get('suppliers/{id?}', 'API\SupplierController@get')->name('suppliers.get')->where('id', '\d+');
+    Route::post('suppliers', 'API\SupplierController@post')->name('suppliers.post');
+    Route::delete('suppliers/{id}', 'API\SupplierController@delete')->name('suppliers.delete')->where('id', '\d+');
+    Route::patch('suppliers/{id}', 'API\SupplierController@patch')->name('suppliers.patch')->where('id', '\d+');
+    Route::put('suppliers/{id}', 'API\SupplierController@patch')->name('suppliers.put')->where('id', '\d+');
+    Route::get('suppliers/total', 'API\SupplierController@total')->name('suppliers.total');
 });
