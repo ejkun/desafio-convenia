@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,10 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['as' => 'api.'], function () {
-    Route::get('suppliers/{id?}', 'API\SupplierController@get')->name('suppliers.get')->where('id', '\d+');
-    Route::post('suppliers', 'API\SupplierController@post')->name('suppliers.post');
-    Route::delete('suppliers/{id}', 'API\SupplierController@delete')->name('suppliers.delete')->where('id', '\d+');
-    Route::patch('suppliers/{id}', 'API\SupplierController@patch')->name('suppliers.patch')->where('id', '\d+');
-    Route::put('suppliers/{id}', 'API\SupplierController@patch')->name('suppliers.put')->where('id', '\d+');
-    Route::get('suppliers/total', 'API\SupplierController@total')->name('suppliers.total');
+    Route::get('suppliers/total','SupplierController@total')->name('suppliers.total');
+    Route::apiResource('suppliers','SupplierController');
 });
