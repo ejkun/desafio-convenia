@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helper\SupplierActivationHelper;
 use App\SupplierActivation;
 use App\Supplier;
 use App\Observers\SupplierActivationObserver;
@@ -31,5 +32,10 @@ class AppServiceProvider extends ServiceProvider
         //Eloquent Observer
         Supplier::observe(SupplierObserver::class);
         SupplierActivation::observe(SupplierActivationObserver::class);
+
+        //Singletons
+        $this->app->singleton(SupplierActivationHelper::class,function ($app) {
+            return new SupplierActivationHelper();
+        });
     }
 }

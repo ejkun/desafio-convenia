@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\SupplierActivationHelper;
 use App\Http\Requests\StoreSupplier;
 use App\Supplier;
 use App\SupplierActivation;
@@ -127,24 +128,10 @@ class SupplierController extends Controller
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function activate($token, Request $request)
+    public function activate($token, Request $request, SupplierActivationHelper $supplierActivationHelper)
     {
-        /** @var Collection $result */
-        $result = SupplierActivation::where(['token' => $token, 'ativo' => 1])->get();
-        if ($result->count() != 1) {
-            throw new NotFoundHttpException("Token inválido");
-        }
-        /** @var SupplierActivation $ativacao */
-        $ativacao = $result->first();
-        /** @var Supplier $fornecedor */
-        $fornecedor = $ativacao->supplier;
-        DB::transaction(function () use ($ativacao, $fornecedor) {
-            $ativacao->ativo = 0;
-            $fornecedor->ativo = 1;
-            $ativacao->save();
-            $fornecedor->save();
-        });
-        Cache::forget('suppliers_total');
+        $fornecedor = $supplierActivationHelper->activate($token);
+
         return view('suppliers/activate',[
             'supplier' => $fornecedor
         ]);
