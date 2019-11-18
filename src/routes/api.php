@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['as' => 'api.'], function () {
+Route::group(['as' => 'api.v1.','prefix' => 'v1'], function () {
     Route::get('suppliers/total','SupplierController@total')->name('suppliers.total');
     Route::apiResource('suppliers','SupplierController');
 });
