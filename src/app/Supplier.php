@@ -19,4 +19,12 @@ class Supplier extends Model
     {
         return $this->hasOne(SupplierActivation::class);
     }
+
+    public static function total()
+    {
+        return Supplier::query()
+            ->selectRaw('IFNULL(SUM(mensalidade),0) as total_mensalidades, COUNT(id) as qtd_fornecedores')
+            ->where('ativo','=',1)
+            ->first();
+    }
 }

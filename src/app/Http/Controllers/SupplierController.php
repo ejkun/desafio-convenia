@@ -112,10 +112,7 @@ class SupplierController extends Controller
     public function total(Request $request)
     {
         $total = Cache::remember('suppliers_total', 60, function () {
-            return Supplier::query()
-                ->selectRaw('IFNULL(SUM(mensalidade),0) as total_mensalidades, COUNT(id) as qtd_fornecedores')
-                ->where('ativo','=',1)
-                ->first();
+            return Supplier::total();
         });
 
         return $total;
