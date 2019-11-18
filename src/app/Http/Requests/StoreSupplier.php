@@ -13,7 +13,7 @@ class StoreSupplier extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class StoreSupplier extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => 'required|max:255',
+            'email' => 'required|email',
+            'mensalidade' => 'required|numeric|min:0'
         ];
     }
 }

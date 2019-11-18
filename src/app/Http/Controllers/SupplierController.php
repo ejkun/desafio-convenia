@@ -39,17 +39,11 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Supplier
      */
-    public function store(Request $request)
+    public function store(StoreSupplier $request)
     {
-        $model = new Supplier();
+        $validated = $request->validated();
 
-        $request->validate($this->bodyValidate);
-
-        foreach ($this->props as $prop) {
-            if ($request->has($prop)) {
-                $model->$prop = $request->input($prop);
-            }
-        }
+        $model = new Supplier($validated);
 
         $model->save();
 
