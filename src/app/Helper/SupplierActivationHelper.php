@@ -31,7 +31,6 @@ class SupplierActivationHelper
             $ativacao->save();
             $fornecedor->save();
         });
-        Cache::forget('suppliers_total');
 
         return $fornecedor;
     }

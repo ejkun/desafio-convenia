@@ -129,6 +129,8 @@ class SupplierController extends Controller
     {
         $fornecedor = $supplierActivationHelper->activate($token);
 
+        Cache::forget('suppliers_total');
+
         return view('suppliers/activate',[
             'supplier' => $fornecedor
         ]);
