@@ -8,6 +8,7 @@ use App\SupplierActivation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SupplierController extends Controller
@@ -73,18 +74,13 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        foreach ($this->props as $p) {
-            if ($request->has($p)) {
-                $pV = $request->input($p);
-                $this
-                    ->getValidationFactory()
-                    ->make([$p => $pV],[$p => $this->bodyValidate[$p]])
-                    ->validate()
-                ;
-                $supplier->$p = $pV;
-            }
-        }
+        $data = Validator::make($request->all(),[
+            'nome' => 'sometimes|required|max:255',
+            'email' => 'sometimes|required|email',
+            'mensalidade' => 'sometimes|required|numeric|min:0'
+        ])->validated();
 
+        $supplier->fill($data);
         $supplier->save();
 
         Cache::forget('suppliers_total');
