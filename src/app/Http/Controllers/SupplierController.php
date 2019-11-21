@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\SupplierActivationHelper;
 use App\Http\Requests\StoreSupplier;
+use App\Http\Requests\UpdateSupplier;
 use App\Supplier;
 use App\SupplierActivation;
 use Illuminate\Http\Request;
@@ -14,13 +15,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SupplierController extends Controller
 {
-    protected $props = ['nome','email','mensalidade','ativo'];
-    protected $bodyValidate = [
-        'nome' => 'required|max:255',
-        'email' => 'required|email',
-        'mensalidade' => 'required|numeric|min:0'
-    ];
-
     /**
      * Display a listing of the resource.
      *
@@ -73,13 +67,9 @@ class SupplierController extends Controller
      * @param  \App\Supplier  $supplier
      * @return Supplier
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(UpdateSupplier $request, Supplier $supplier)
     {
-        $data = Validator::make($request->all(),[
-            'nome' => 'sometimes|required|max:255',
-            'email' => 'sometimes|required|email',
-            'mensalidade' => 'sometimes|required|numeric|min:0'
-        ])->validated();
+        $data = $request->validated();
 
         $supplier->fill($data);
         $supplier->save();
