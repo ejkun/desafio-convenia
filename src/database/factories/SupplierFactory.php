@@ -7,15 +7,15 @@ use Faker\Generator as Faker;
 
 $factory->define(Supplier::class, function (Faker $faker) {
     return [
-        'nome' => $faker->name,
+        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'mensalidade' => $faker->numberBetween(100,1000),
-        'ativo' => false,
+        'monthlyPayment' => $faker->numberBetween(100,1000),
+        'active' => false,
         'created_at' => now(),
         'updated_at' => now(),
     ];
 });
 
 $factory->state(Supplier::class,'active',[
-    'ativo' => true
+    'active' => true
 ]);

@@ -83,8 +83,9 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Supplier  $supplier
+     * @param Supplier $supplier
      * @return Supplier
+     * @throws \Exception
      */
     public function destroy(Supplier $supplier)
     {
@@ -113,16 +114,17 @@ class SupplierController extends Controller
      *
      * @param $token
      * @param Request $request
-     * @return \Illuminate\View\View
+     * @param SupplierActivationHelper $supplierActivationHelper
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function activate($token, Request $request, SupplierActivationHelper $supplierActivationHelper)
     {
-        $fornecedor = $supplierActivationHelper->activate($token);
+        $supplier = $supplierActivationHelper->activate($token);
 
         Cache::forget('suppliers_total');
 
         return view('suppliers/activate',[
-            'supplier' => $fornecedor
+            'name' => $supplier->name
         ]);
     }
 }

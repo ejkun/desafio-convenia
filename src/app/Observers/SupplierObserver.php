@@ -10,18 +10,18 @@ class SupplierObserver
     /**
      * Handle the supplier "created" event.
      *
-     * @param  \App\Supplier  $fornecedor
+     * @param  \App\Supplier  $supplier
      * @return void
      */
-    public function created(Supplier $fornecedor)
+    public function created(Supplier $supplier)
     {
-        $ativacao = new SupplierActivation();
-        $ativacao->token = md5($fornecedor->email);
-        $fornecedor->activation()->save($ativacao);
+        $activation = new SupplierActivation();
+        $activation->token = md5($supplier->email);
+        $supplier->activation()->save($activation);
     }
 
-    public function deleting(Supplier $fornecedor)
+    public function deleting(Supplier $supplier)
     {
-        $fornecedor->activation()->delete();
+        $supplier->activation()->delete();
     }
 }

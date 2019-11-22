@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     protected $table = 'suppliers';
-    protected $fillable = ['nome','email','mensalidade'];
+    protected $fillable = ['name','email','monthlyPayment'];
 
     public function activation()
     {
@@ -23,8 +23,8 @@ class Supplier extends Model
     public static function total()
     {
         return Supplier::query()
-            ->selectRaw('IFNULL(SUM(mensalidade),0) as total_mensalidades, COUNT(id) as qtd_fornecedores')
-            ->where('ativo','=',1)
+            ->selectRaw('IFNULL(SUM(monthlyPayment),0) as total_payments, COUNT(id) as suppliers_qtt')
+            ->where('active','=',1)
             ->first();
     }
 }

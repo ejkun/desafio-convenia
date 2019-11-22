@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class FornecedorTest extends TestCase
+class SupplierTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -38,8 +38,8 @@ class FornecedorTest extends TestCase
 
         //MEDIA
         $this->checkTotal([
-            'total_mensalidades' => 1000,
-            'qtd_fornecedores' => 1
+            'total_payments' => 1000,
+            'suppliers_qtt' => 1
         ]);
 
         //ATIVAR
@@ -47,8 +47,8 @@ class FornecedorTest extends TestCase
 
         //MEDIA
         $this->checkTotal([
-            'total_mensalidades' => 1900,
-            'qtd_fornecedores' => 2
+            'total_payments' => 1900,
+            'suppliers_qtt' => 2
         ]);
 
         //DELETE
@@ -58,15 +58,15 @@ class FornecedorTest extends TestCase
 
     private function inserirFornecedor1()
     {
-        $response = $this->postJson('/api/suppliers',[
-            'nome' => 'Convenia',
+        $response = $this->postJson('/api/v1/suppliers',[
+            'name' => 'Convenia',
             'email' => 'contato@convenia.com.br',
-            'mensalidade' => 980
+            'monthlyPayment' => 980
         ]);
         $response->assertJson([
-            'nome' => 'Convenia',
+            'name' => 'Convenia',
             'email' => 'contato@convenia.com.br',
-            'mensalidade' => 980
+            'monthlyPayment' => 980
         ]);
 
         return $response->json();
@@ -74,15 +74,15 @@ class FornecedorTest extends TestCase
 
     private function inserirFornecedor2()
     {
-        $response = $this->postJson('/api/suppliers',[
-            'nome' => 'Room21',
+        $response = $this->postJson('/api/v1/suppliers',[
+            'name' => 'Room21',
             'email' => 'contato@room21.dev',
-            'mensalidade' => 835
+            'monthlyPayment' => 835
         ]);
         $response->assertJson([
-            'nome' => 'Room21',
+            'name' => 'Room21',
             'email' => 'contato@room21.dev',
-            'mensalidade' => 835
+            'monthlyPayment' => 835
         ]);
 
         return $response->json();
@@ -90,33 +90,33 @@ class FornecedorTest extends TestCase
 
     private function verificarFornecedor($fornecedor)
     {
-        $response = $this->getJson('/api/suppliers/'.$fornecedor['id']);
+        $response = $this->getJson('/api/v1/suppliers/'.$fornecedor['id']);
         $response->assertJson($fornecedor);
     }
 
     private function putFornecedor1($fornecedor)
     {
-        $response = $this->putJson('/api/suppliers/'.$fornecedor['id'],[
-            'nome' => 'Convenia',
+        $response = $this->putJson('/api/v1/suppliers/'.$fornecedor['id'],[
+            'name' => 'Convenia',
             'email' => 'contato@convenia.com.br',
-            'mensalidade' => 1000
+            'monthlyPayment' => 1000
         ]);
         $response->assertJson([
-            'nome' => 'Convenia',
+            'name' => 'Convenia',
             'email' => 'contato@convenia.com.br',
-            'mensalidade' => 1000
+            'monthlyPayment' => 1000
         ]);
     }
 
     private function patchFornecedor2($fornecedor)
     {
-        $response = $this->patchJson('/api/suppliers/'.$fornecedor['id'],[
-            'mensalidade' => 900
+        $response = $this->patchJson('/api/v1/suppliers/'.$fornecedor['id'],[
+            'monthlyPayment' => 900
         ]);
         $response->assertJson([
-            'nome' => 'Room21',
+            'name' => 'Room21',
             'email' => 'contato@room21.dev',
-            'mensalidade' => 900
+            'monthlyPayment' => 900
         ]);
     }
 
@@ -130,18 +130,18 @@ class FornecedorTest extends TestCase
 
     private function checkTotal($arr)
     {
-        $response = $this->get('/api/suppliers/total');
+        $response = $this->get('/api/v1/suppliers/total');
         $response->assertJson($arr);
     }
 
     private function deleteFornecedor($fornecedor)
     {
         $obj = Supplier::find($fornecedor['id']);
-        $response = $this->deleteJson('/api/suppliers/'.$fornecedor['id']);
+        $response = $this->deleteJson('/api/v1/suppliers/'.$fornecedor['id']);
         $response->assertJson([
-            'nome' => $obj->nome,
+            'name' => $obj->name,
             'email' => $obj->email,
-            'mensalidade' => $obj->mensalidade
+            'monthlyPayment' => $obj->monthlyPayment
         ]);
     }
 }

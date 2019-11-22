@@ -13,16 +13,16 @@ class SupplierActivationEmail extends Mailable
     use Queueable, SerializesModels;
 
     /** @var SupplierActivation */
-    private $ativacaoFornecedor;
+    private $supplierActivation;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(SupplierActivation $ativacaoFornecedor)
+    public function __construct(SupplierActivation $supplierActivation)
     {
-        $this->ativacaoFornecedor = $ativacaoFornecedor;
+        $this->supplierActivation = $supplierActivation;
     }
 
     /**
@@ -32,15 +32,15 @@ class SupplierActivationEmail extends Mailable
      */
     public function build()
     {
-        $fornecedor = $this->ativacaoFornecedor->supplier()->first();
+        $supplier = $this->supplierActivation->supplier()->first();
 
-        $aux = [
-            'nome' => $fornecedor->nome,
-            'valor' => $fornecedor->mensalidade,
-            'url' => route('web.activate.suppliers',['token' => $this->ativacaoFornecedor->token]),
-            'token' => $this->ativacaoFornecedor->token
+        $data = [
+            'name' => $supplier->name,
+            'value' => $supplier->monthlyPayment,
+            'url' => route('web.activate.suppliers',['token' => $this->supplierActivation->token]),
+            'token' => $this->supplierActivation->token
         ];
 
-        return $this->view('emails.supplier_activation',$aux);
+        return $this->view('emails.supplier_activation',$data);
     }
 }

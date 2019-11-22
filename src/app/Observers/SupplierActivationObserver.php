@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Mail;
 class SupplierActivationObserver
 {
     /**
-     * Handle the ativacao supplier "created" event.
+     * Handle the SupplierActivation "created" event.
      *
-     * @param  \App\SupplierActivation  $ativacaoFornecedor
+     * @param  \App\SupplierActivation  $supplierActivation
      * @return void
      */
-    public function created(SupplierActivation $ativacaoFornecedor)
+    public function created(SupplierActivation $supplierActivation)
     {
-        ActivateSupplier::dispatch($ativacaoFornecedor)->onQueue('emails');
+        ActivateSupplier::dispatch($supplierActivation)->onQueue('emails');
     }
 }

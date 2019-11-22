@@ -15,16 +15,17 @@ class ActivateSupplier implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $ativacaoFornecedor;
+    private $supplierActivation;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * ActivateSupplier constructor.
+     * @param SupplierActivation $supplierActivation
      */
-    public function __construct(SupplierActivation $ativacaoFornecedor)
+    public function __construct(SupplierActivation $supplierActivation)
     {
-        $this->ativacaoFornecedor = $ativacaoFornecedor;
+        $this->$supplierActivation = $supplierActivation;
     }
 
     /**
@@ -34,8 +35,8 @@ class ActivateSupplier implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->ativacaoFornecedor->supplier()->get('email'))
-            ->send(new SupplierActivationEmail($this->ativacaoFornecedor))
+        Mail::to($this->supplierActivation->supplier()->get('email'))
+            ->send(new SupplierActivationEmail($this->supplierActivation))
         ;
     }
 }

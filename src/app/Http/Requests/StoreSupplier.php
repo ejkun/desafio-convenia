@@ -24,9 +24,9 @@ class StoreSupplier extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|max:255',
+            'name' => 'required|max:255',
             'email' => 'required|email',
-            'mensalidade' => 'required|numeric|min:0'
+            'monthlyPayment' => 'required|numeric|min:0'
         ];
     }
 }

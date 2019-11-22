@@ -61,7 +61,7 @@
 <div class="flex-center position-ref full-height">
     <div class="content">
         <div class="title m-b-md">
-            Fornecedor {{ $supplier->nome  }} Ativado!
+            Fornecedor {{ $name  }} Ativado!
         </div>
         <p>
             Seu cadastro foi ativado.

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAtivacaoFornecedorsTable extends Migration
+class CreateSuppliersActivationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class CreateAtivacaoFornecedorsTable extends Migration
         Schema::create('suppliers_activations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('token',32);
-            $table->boolean('ativo')->default(false);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

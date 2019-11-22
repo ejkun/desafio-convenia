@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeAtivoAtivacaoFornecedores extends Migration
+class AddActiveSuppliers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class ChangeAtivoAtivacaoFornecedores extends Migration
      */
     public function up()
     {
-        Schema::table('suppliers_activations', function (Blueprint $table) {
-            $table->boolean('ativo')->default(true)->change();
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->boolean('active')->default(false);
         });
     }
 
@@ -25,8 +25,8 @@ class ChangeAtivoAtivacaoFornecedores extends Migration
      */
     public function down()
     {
-        Schema::table('suppliers_activations', function (Blueprint $table) {
-            $table->boolean('ativo')->default(false)->change();
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->removeColumn('active');
         });
     }
 }
