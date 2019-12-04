@@ -17,7 +17,13 @@ class CreateSuppliersActivationTable extends Migration
             $table->bigIncrements('id');
             $table->char('token',32);
             $table->boolean('active')->default(false);
+            $table->unsignedBigInteger('supplier_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('supplier_id')
+                ->references('id')
+                ->on('suppliers')
+            ;
         });
     }
 

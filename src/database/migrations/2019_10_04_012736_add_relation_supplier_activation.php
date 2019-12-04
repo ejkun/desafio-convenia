@@ -23,15 +23,6 @@ class AddRelationSupplierActivation extends Migration
                 ->onDelete('cascade')
             ;
         });
-
-        Schema::table('suppliers_activations', function (Blueprint $table) {
-            $table->unsignedBigInteger('supplier_id')->nullable();
-
-            $table->foreign('supplier_id')
-                ->references('id')
-                ->on('suppliers')
-            ;
-        });
     }
 
     /**
@@ -44,11 +35,6 @@ class AddRelationSupplierActivation extends Migration
         Schema::table('suppliers', function (Blueprint $table) {
             $table->dropForeign(['activation_supplier_id']);
             $table->dropColumn('activation_supplier_id');
-        });
-
-        Schema::table('suppliers_activations', function (Blueprint $table) {
-            $table->dropForeign(['supplier_id']);
-            $table->dropColumn('supplier_id');
         });
     }
 }
