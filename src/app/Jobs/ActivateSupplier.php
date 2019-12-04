@@ -25,7 +25,7 @@ class ActivateSupplier implements ShouldQueue
      */
     public function __construct(SupplierActivation $supplierActivation)
     {
-        $this->$supplierActivation = $supplierActivation;
+        $this->supplierActivation = $supplierActivation;
     }
 
     /**
