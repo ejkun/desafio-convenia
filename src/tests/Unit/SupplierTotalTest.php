@@ -26,7 +26,7 @@ class SupplierTotalTest extends TestCase
 
         $total = Supplier::total()['total_payments'];
 
-        $this->assertEquals($expectedTotal,$total);
+        $this->assertEquals($expectedTotal, $total);
 
         $newSupplier = factory(\App\Supplier::class, 1)->create()[0];
         $newSupplier->active = 1;
@@ -36,6 +36,6 @@ class SupplierTotalTest extends TestCase
 
         $total = Supplier::total()['total_payments'];
 
-        $this->assertEquals($newExpectedTotal,$total);
+        $this->assertEquals($newExpectedTotal, $total);
     }
 }

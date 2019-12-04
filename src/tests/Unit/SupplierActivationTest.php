@@ -27,8 +27,8 @@ class SupplierActivationTest extends TestCase
 
         $supplier = Supplier::find($supplier->id);
 
-        $this->assertEquals($supplier->active,1);
-        $this->assertEquals($supplier->activation->active,0);
+        $this->assertEquals($supplier->active, 1);
+        $this->assertEquals($supplier->activation->active, 0);
 
         $this->expectExceptionMessage("Token inválido");
         $helper->activate($token);

@@ -37,10 +37,10 @@ class SupplierActivationEmail extends Mailable
         $data = [
             'name' => $supplier->name,
             'value' => $supplier->monthlyPayment,
-            'url' => route('web.show_activation.suppliers',['token' => $this->supplierActivation->token]),
+            'url' => route('web.show_activation.suppliers', ['token' => $this->supplierActivation->token]),
             'token' => $this->supplierActivation->token
         ];
 
-        return $this->view('emails.supplier_activation',$data);
+        return $this->view('emails.supplier_activation', $data);
     }
 }

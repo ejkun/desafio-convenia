@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
         SupplierActivation::observe(SupplierActivationObserver::class);
 
         //Singletons
-        $this->app->singleton(SupplierActivationHelper::class,function ($app) {
+        $this->app->singleton(SupplierActivationHelper::class, function ($app) {
             return new SupplierActivationHelper();
         });
     }

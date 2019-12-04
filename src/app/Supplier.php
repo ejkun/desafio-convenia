@@ -24,7 +24,7 @@ class Supplier extends Model
     {
         return Supplier::query()
             ->selectRaw('IFNULL(SUM(monthlyPayment),0) as total_payments, COUNT(id) as suppliers_qtt')
-            ->where('active','=',1)
+            ->where('active', '=', 1)
             ->first();
     }
 }

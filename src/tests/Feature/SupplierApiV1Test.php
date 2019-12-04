@@ -38,9 +38,9 @@ class SupplierApiV1Test extends TestCase
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'monthlyPayment' => $this->faker->numberBetween(100,1000),
+            'monthlyPayment' => $this->faker->numberBetween(100, 1000),
         ];
-        $response = $this->postJson('/api/v1/suppliers',$data);
+        $response = $this->postJson('/api/v1/suppliers', $data);
 
         $response->assertStatus(201);
         $response->assertJson($data);
@@ -49,7 +49,7 @@ class SupplierApiV1Test extends TestCase
     public function testStoreMissingBody()
     {
         $data = [];
-        $response = $this->postJson('/api/v1/suppliers',$data);
+        $response = $this->postJson('/api/v1/suppliers', $data);
 
         $response->assertStatus(422);
         $response->assertJson([
@@ -68,7 +68,7 @@ class SupplierApiV1Test extends TestCase
             'email' => 'notavalidemail',
             'monthlyPayment' => -1
         ];
-        $response = $this->postJson('/api/v1/suppliers',$data);
+        $response = $this->postJson('/api/v1/suppliers', $data);
 
         $response->assertStatus(422);
         $response->assertJson([
@@ -93,9 +93,9 @@ class SupplierApiV1Test extends TestCase
         $data = [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'monthlyPayment' => $this->faker->numberBetween(100,1000),
+            'monthlyPayment' => $this->faker->numberBetween(100, 1000),
         ];
-        $response = $this->patchJson('/api/v1/suppliers/1',$data);
+        $response = $this->patchJson('/api/v1/suppliers/1', $data);
 
         $response->assertStatus(200);
         $response->assertJson($data);
@@ -104,7 +104,7 @@ class SupplierApiV1Test extends TestCase
     public function testUpdateNotFound()
     {
         $data = [];
-        $response = $this->patchJson('/api/v1/suppliers/1',$data);
+        $response = $this->patchJson('/api/v1/suppliers/1', $data);
 
         $response->assertStatus(404);
     }
@@ -113,7 +113,7 @@ class SupplierApiV1Test extends TestCase
     {
         $supplier = factory(\App\Supplier::class, 1)->state('active')->create();
         $data = [];
-        $response = $this->patchJson('/api/v1/suppliers/1',$data);
+        $response = $this->patchJson('/api/v1/suppliers/1', $data);
 
         $response->assertStatus(422);
         $response->assertJson([
@@ -133,7 +133,7 @@ class SupplierApiV1Test extends TestCase
             'email' => 'notavalidemail',
             'monthlyPayment' => -1
         ];
-        $response = $this->patchJson('/api/v1/suppliers/1',$data);
+        $response = $this->patchJson('/api/v1/suppliers/1', $data);
 
         $response->assertStatus(422);
         $response->assertJson([
@@ -158,13 +158,15 @@ class SupplierApiV1Test extends TestCase
         Supplier::findOrFail($supplier->id);
     }
 
-    public function testDeleteNotFound() {
+    public function testDeleteNotFound()
+    {
         $response = $this->deleteJson('/api/v1/suppliers/1');
 
         $response->assertStatus(404);
     }
 
-    public function testTotalSuccess() {
+    public function testTotalSuccess()
+    {
         $supplier = factory(\App\Supplier::class, 4)->state('active')->create();
 
         $response = $this->getJson('/api/v1/suppliers/total');

@@ -128,7 +128,7 @@ class SupplierController extends Controller
 
         Cache::forget('suppliers_total');
 
-        return view('suppliers/activate',[
+        return view('suppliers/activate', [
             'name' => $supplier->name
         ]);
     }
@@ -153,7 +153,7 @@ class SupplierController extends Controller
         /** @var Supplier $supplier */
         $supplier = $activation->supplier;
 
-        return view('suppliers/activation',[
+        return view('suppliers/activation', [
             'name' => $supplier->name
         ]);
     }

@@ -15,7 +15,7 @@ class CreateSuppliersActivationTable extends Migration
     {
         Schema::create('suppliers_activations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('token',32);
+            $table->char('token', 32);
             $table->boolean('active')->default(false);
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->timestamps();

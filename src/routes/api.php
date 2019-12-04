@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['as' => 'api.v1.','prefix' => 'v1'], function () {
-    Route::get('suppliers/total','SupplierController@total')->name('suppliers.total');
-    Route::apiResource('suppliers','SupplierController');
+    Route::get('suppliers/total', 'SupplierController@total')->name('suppliers.total');
+    Route::apiResource('suppliers', 'SupplierController');
 });

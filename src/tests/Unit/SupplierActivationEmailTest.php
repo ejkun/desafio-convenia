@@ -19,7 +19,7 @@ class SupplierActivationEmailTest extends TestCase
 
         $emails = $this->app->make('swift.transport')->driver()->messages();
 
-        $this->assertCount(1,$emails);
+        $this->assertCount(1, $emails);
         $this->assertEquals([$supplier->email], array_keys($emails[0]->getTo()));
     }
 }
