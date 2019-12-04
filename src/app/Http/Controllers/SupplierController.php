@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSupplier;
 use App\Http\Requests\UpdateSupplier;
 use App\Supplier;
 use App\SupplierActivation;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -70,6 +71,10 @@ class SupplierController extends Controller
     public function update(UpdateSupplier $request, Supplier $supplier)
     {
         $data = $request->validated();
+
+        if (empty($data)) {
+            return new JsonResponse(404);
+        }
 
         $supplier->fill($data);
         $supplier->save();

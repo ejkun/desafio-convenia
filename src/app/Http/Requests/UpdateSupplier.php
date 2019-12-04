@@ -24,9 +24,9 @@ class UpdateSupplier extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|max:255',
-            'email' => 'sometimes|required|email',
-            'monthlyPayment' => 'sometimes|required|numeric|min:0'
+            'name' => 'required_without_all:the others|required|min:3|max:255',
+            'email' => 'required_without_all:the others|required|email',
+            'monthlyPayment' => 'required_without_all:the others|required|numeric|min:0'
         ];
     }
 }

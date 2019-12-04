@@ -24,7 +24,7 @@ class StoreSupplier extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|min:3|max:255',
             'email' => 'required|email',
             'monthlyPayment' => 'required|numeric|min:0'
         ];
