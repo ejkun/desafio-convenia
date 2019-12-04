@@ -3,29 +3,23 @@
 namespace App\Providers;
 
 use App\Helper\SupplierActivationHelper;
-use App\SupplierActivation;
-use App\Supplier;
 use App\Observers\SupplierActivationObserver;
 use App\Observers\SupplierObserver;
-use Illuminate\Support\Facades\Blade;
+use App\Supplier;
+use App\SupplierActivation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
-        //
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {

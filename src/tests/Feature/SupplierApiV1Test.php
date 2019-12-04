@@ -7,14 +7,15 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SupplierApiV1Test extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
 
-    /**
-     * @return void
-     */
     public function testGetAll()
     {
         $supplier = factory(\App\Supplier::class, 4)->state('active')->create();
@@ -56,8 +57,8 @@ class SupplierApiV1Test extends TestCase
             'errors' => [
                 'name' => ['The name field is required.'],
                 'email' => ['The email field is required.'],
-                'monthlyPayment' => ['The monthly payment field is required.']
-            ]
+                'monthlyPayment' => ['The monthly payment field is required.'],
+            ],
         ]);
     }
 
@@ -66,7 +67,7 @@ class SupplierApiV1Test extends TestCase
         $data = [
             'name' => 'a',
             'email' => 'notavalidemail',
-            'monthlyPayment' => -1
+            'monthlyPayment' => -1,
         ];
         $response = $this->postJson('/api/v1/suppliers', $data);
 
@@ -75,8 +76,8 @@ class SupplierApiV1Test extends TestCase
             'errors' => [
                 'name' => ['The name must be at least 3 characters.'],
                 'email' => ['The email must be a valid email address.'],
-                'monthlyPayment' => ['The monthly payment must be at least 0.']
-            ]
+                'monthlyPayment' => ['The monthly payment must be at least 0.'],
+            ],
         ]);
     }
 
@@ -120,8 +121,8 @@ class SupplierApiV1Test extends TestCase
             'errors' => [
                 'name' => ['The name field is required when none of the others are present.'],
                 'email' => ['The email field is required when none of the others are present.'],
-                'monthlyPayment' => ['The monthly payment field is required when none of the others are present.']
-            ]
+                'monthlyPayment' => ['The monthly payment field is required when none of the others are present.'],
+            ],
         ]);
     }
 
@@ -131,7 +132,7 @@ class SupplierApiV1Test extends TestCase
         $data = [
             'name' => 'a',
             'email' => 'notavalidemail',
-            'monthlyPayment' => -1
+            'monthlyPayment' => -1,
         ];
         $response = $this->patchJson('/api/v1/suppliers/1', $data);
 
@@ -140,8 +141,8 @@ class SupplierApiV1Test extends TestCase
             'errors' => [
                 'name' => ['The name must be at least 3 characters.'],
                 'email' => ['The email must be a valid email address.'],
-                'monthlyPayment' => ['The monthly payment must be at least 0.']
-            ]
+                'monthlyPayment' => ['The monthly payment must be at least 0.'],
+            ],
         ]);
     }
 
@@ -153,7 +154,7 @@ class SupplierApiV1Test extends TestCase
 
         $response->assertStatus(200);
 
-        $this->expectExceptionMessage("No query results for model [App\Supplier] 1");
+        $this->expectExceptionMessage('No query results for model [App\\Supplier] 1');
 
         Supplier::findOrFail($supplier->id);
     }

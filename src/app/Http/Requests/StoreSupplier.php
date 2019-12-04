@@ -26,7 +26,7 @@ class StoreSupplier extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'email' => 'required|email',
-            'monthlyPayment' => 'required|numeric|min:0'
+            'monthlyPayment' => 'required|numeric|min:0',
         ];
     }
 }

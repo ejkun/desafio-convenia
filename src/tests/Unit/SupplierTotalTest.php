@@ -4,16 +4,18 @@ namespace Tests\Unit;
 
 use App\Supplier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SupplierTotalTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic unit test example.
-     *
-     * @return void
      */
     public function testTotal()
     {

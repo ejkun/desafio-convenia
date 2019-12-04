@@ -2,16 +2,15 @@
 
 namespace App\Observers;
 
-use App\SupplierActivation;
 use App\Supplier;
+use App\SupplierActivation;
 
 class SupplierObserver
 {
     /**
      * Handle the supplier "created" event.
      *
-     * @param  \App\Supplier  $supplier
-     * @return void
+     * @param \App\Supplier $supplier
      */
     public function created(Supplier $supplier)
     {

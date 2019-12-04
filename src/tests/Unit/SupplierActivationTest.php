@@ -5,16 +5,18 @@ namespace Tests\Unit;
 use App\Helper\SupplierActivationHelper;
 use App\Supplier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class SupplierActivationTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic unit test example.
-     *
-     * @return void
      */
     public function testActivation()
     {
@@ -30,7 +32,7 @@ class SupplierActivationTest extends TestCase
         $this->assertEquals($supplier->active, 1);
         $this->assertEquals($supplier->activation->active, 0);
 
-        $this->expectExceptionMessage("Token inválido");
+        $this->expectExceptionMessage('Token inválido');
         $helper->activate($token);
     }
 
@@ -38,7 +40,7 @@ class SupplierActivationTest extends TestCase
     {
         $helper = $this->app->make(SupplierActivationHelper::class);
 
-        $this->expectExceptionMessage("Token inválido");
-        $helper->activate("randomstring");
+        $this->expectExceptionMessage('Token inválido');
+        $helper->activate('randomstring');
     }
 }

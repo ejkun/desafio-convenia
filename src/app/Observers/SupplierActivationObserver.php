@@ -2,18 +2,15 @@
 
 namespace App\Observers;
 
-use App\SupplierActivation;
 use App\Jobs\ActivateSupplier;
-use App\Mail\SupplierActivationEmail;
-use Illuminate\Support\Facades\Mail;
+use App\SupplierActivation;
 
 class SupplierActivationObserver
 {
     /**
      * Handle the SupplierActivation "created" event.
      *
-     * @param  \App\SupplierActivation  $supplierActivation
-     * @return void
+     * @param \App\SupplierActivation $supplierActivation
      */
     public function created(SupplierActivation $supplierActivation)
     {

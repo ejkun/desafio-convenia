@@ -26,7 +26,7 @@ class UpdateSupplier extends FormRequest
         return [
             'name' => 'required_without_all:the others|required|min:3|max:255',
             'email' => 'required_without_all:the others|required|email',
-            'monthlyPayment' => 'required_without_all:the others|required|numeric|min:0'
+            'monthlyPayment' => 'required_without_all:the others|required|numeric|min:0',
         ];
     }
 }

@@ -10,8 +10,6 @@ use App\SupplierActivation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SupplierController extends Controller
@@ -33,7 +31,8 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Supplier
      */
     public function store(StoreSupplier $request)
@@ -53,7 +52,8 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Supplier  $supplier
+     * @param \App\Supplier $supplier
+     *
      * @return Supplier
      */
     public function show(Supplier $supplier)
@@ -64,8 +64,9 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Supplier  $supplier
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Supplier            $supplier
+     *
      * @return Supplier
      */
     public function update(UpdateSupplier $request, Supplier $supplier)
@@ -89,8 +90,10 @@ class SupplierController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Supplier $supplier
-     * @return Supplier
+     *
      * @throws \Exception
+     *
+     * @return Supplier
      */
     public function destroy(Supplier $supplier)
     {
@@ -100,9 +103,10 @@ class SupplierController extends Controller
     }
 
     /**
-     * Calculate the sum of monthly payment of activated suppliers
+     * Calculate the sum of monthly payment of activated suppliers.
      *
      * @param Request $request
+     *
      * @return float
      */
     public function total(Request $request)
@@ -115,11 +119,12 @@ class SupplierController extends Controller
     }
 
     /**
-     * Activate a supplier
+     * Activate a supplier.
      *
      * @param $token
-     * @param Request $request
+     * @param Request                  $request
      * @param SupplierActivationHelper $supplierActivationHelper
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function activate($token, Request $request, SupplierActivationHelper $supplierActivationHelper)
@@ -129,32 +134,33 @@ class SupplierController extends Controller
         Cache::forget('suppliers_total');
 
         return view('suppliers/activate', [
-            'name' => $supplier->name
+            'name' => $supplier->name,
         ]);
     }
 
     /**
-     * Show page to activate a supplier
+     * Show page to activate a supplier.
      *
      * @param $token
-     * @param Request $request
+     * @param Request                  $request
      * @param SupplierActivationHelper $supplierActivationHelper
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showActivation($token, Request $request)
     {
-        /** @var Collection $result */
+        // @var Collection $result
         $result = SupplierActivation::where(['token' => $token, 'active' => 1])->get();
-        if ($result->count() != 1) {
-            throw new NotFoundHttpException("Token inválido");
+        if (1 != $result->count()) {
+            throw new NotFoundHttpException('Token inválido');
         }
-        /** @var SupplierActivation $activation */
+        // @var SupplierActivation $activation
         $activation = $result->first();
-        /** @var Supplier $supplier */
+        // @var Supplier $supplier
         $supplier = $activation->supplier;
 
         return view('suppliers/activation', [
-            'name' => $supplier->name
+            'name' => $supplier->name,
         ]);
     }
 }

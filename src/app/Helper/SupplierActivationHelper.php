@@ -4,7 +4,6 @@ namespace App\Helper;
 
 use App\Supplier;
 use App\SupplierActivation;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -12,18 +11,19 @@ class SupplierActivationHelper
 {
     /**
      * @param string $token
+     *
      * @return Supplier
      */
     public function activate(string $token): Supplier
     {
-        /** @var Collection $result */
+        // @var Collection $result
         $result = SupplierActivation::where(['token' => $token, 'active' => 1])->get();
-        if ($result->count() != 1) {
-            throw new NotFoundHttpException("Token inválido");
+        if (1 != $result->count()) {
+            throw new NotFoundHttpException('Token inválido');
         }
-        /** @var SupplierActivation $activation */
+        // @var SupplierActivation $activation
         $activation = $result->first();
-        /** @var Supplier $supplier */
+        // @var Supplier $supplier
         $supplier = $activation->supplier;
         DB::transaction(function () use ($activation, $supplier) {
             $activation->active = 0;

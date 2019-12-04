@@ -5,15 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Supplier
- * @package App
+ * Class Supplier.
  *
  * @method \App\Supplier find($id)
  */
 class Supplier extends Model
 {
     protected $table = 'suppliers';
-    protected $fillable = ['name','email','monthlyPayment'];
+    protected $fillable = ['name', 'email', 'monthlyPayment'];
 
     public function activation()
     {
@@ -25,6 +24,7 @@ class Supplier extends Model
         return Supplier::query()
             ->selectRaw('IFNULL(SUM(monthlyPayment),0) as total_payments, COUNT(id) as suppliers_qtt')
             ->where('active', '=', 1)
-            ->first();
+            ->first()
+        ;
     }
 }
