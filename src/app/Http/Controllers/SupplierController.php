@@ -132,4 +132,29 @@ class SupplierController extends Controller
             'name' => $supplier->name
         ]);
     }
+
+    /**
+     * Show page to activate a supplier
+     *
+     * @param $token
+     * @param Request $request
+     * @param SupplierActivationHelper $supplierActivationHelper
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showActivation($token, Request $request)
+    {
+        /** @var Collection $result */
+        $result = SupplierActivation::where(['token' => $token, 'active' => 1])->get();
+        if ($result->count() != 1) {
+            throw new NotFoundHttpException("Token inválido");
+        }
+        /** @var SupplierActivation $activation */
+        $activation = $result->first();
+        /** @var Supplier $supplier */
+        $supplier = $activation->supplier;
+
+        return view('suppliers/activation',[
+            'name' => $supplier->name
+        ]);
+    }
 }

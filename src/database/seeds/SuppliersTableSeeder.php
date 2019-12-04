@@ -11,8 +11,8 @@ class SuppliersTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Supplier::flushEventListeners();
-        factory(\App\Supplier::class, 15)->state('active')->create();
-        factory(\App\Supplier::class, 5)->create();
+        //\App\Supplier::flushEventListeners();
+        //factory(\App\Supplier::class, 0)->state('active')->create();
+        factory(\App\Supplier::class, 1)->create();
     }
 }
