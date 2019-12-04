@@ -7,17 +7,10 @@ use App\Supplier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class SupplierActivationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic unit test example.
-     */
     public function testActivation()
     {
         \App\SupplierActivation::flushEventListeners();

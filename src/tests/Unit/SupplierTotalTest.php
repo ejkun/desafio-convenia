@@ -6,10 +6,6 @@ use App\Supplier;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class SupplierTotalTest extends TestCase
 {
     use RefreshDatabase;

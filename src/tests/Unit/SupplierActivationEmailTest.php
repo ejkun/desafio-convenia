@@ -5,10 +5,6 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * @internal
- * @coversNothing
- */
 class SupplierActivationEmailTest extends TestCase
 {
     use RefreshDatabase;

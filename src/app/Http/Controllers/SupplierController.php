@@ -10,6 +10,7 @@ use App\SupplierActivation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SupplierController extends Controller
@@ -72,10 +73,6 @@ class SupplierController extends Controller
     public function update(UpdateSupplier $request, Supplier $supplier)
     {
         $data = $request->validated();
-
-        if (empty($data)) {
-            return new JsonResponse(404);
-        }
 
         $supplier->fill($data);
         $supplier->save();
